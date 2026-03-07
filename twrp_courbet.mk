@@ -16,19 +16,22 @@
 
 # Release name
 PRODUCT_RELEASE_NAME := courbet
-DEVICE_PATH := device/xiaomi/courbet
+DEVICE_PATH := device/xiaomi/$(PRODUCT_RELEASE_NAME)
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
 
 # Inherit from our custom product configuration
 $(call inherit-product, vendor/twrp/config/common.mk)
 
+# Inherit any OrangeFox-specific settings
+$(call inherit-product-if-exists, $(DEVICE_PATH)/fox_courbet.mk)
+
 # Inherit device configuration
 $(call inherit-product, device/xiaomi/courbet/device.mk)
 
 ## Device identifier. This must come after all inclusions
-PRODUCT_DEVICE := courbet
-PRODUCT_NAME := twrp_courbet
+PRODUCT_DEVICE := $(PRODUCT_RELEASE_NAME)
+PRODUCT_NAME := twrp_$(PRODUCT_RELEASE_NAME)
 PRODUCT_BRAND := Mi
 PRODUCT_MODEL := M2101K9AG
 PRODUCT_MANUFACTURER := Xiaomi
